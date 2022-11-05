@@ -31,16 +31,26 @@ public class LibraryMgmentApplication {
         return args -> {
            //repo.createSchema();
 //           repo.create(Book.builder()
-//                           .id(1)
-//                           .isbn("ISBN2882737")
+//                           .id(2)
+//                           .isbn("ISBN2882738")
 //                           .category("Programming")
-//                           .author(Author.builder().id(1).name("Edward").build())
+//                           .author(Author.builder().id(1).name("Himanshu").build())
 //                           .createDate(new Date())
 //                           .publishDate(new Date())
-//                           .title("Awesome Spring")
+//                           .title("Awesome Java")
 //                   .build());
+//            repo.create(Book.builder()
+//                    .id(3)
+//                    .isbn("ISBN2882739")
+//                    .category("Programming")
+//                    .author(Author.builder().id(1).name("Mayank").build())
+//                    .createDate(new Date())
+//                    .publishDate(new Date())
+//                    .title("Awesome Git")
+//                    .build());
             List<Book> books = repo.getAll(Collections.emptyMap());
-            System.out.println(books);
+
+            System.out.println(repo.getById(2));
         };
 
 

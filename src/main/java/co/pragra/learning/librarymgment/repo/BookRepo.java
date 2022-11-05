@@ -33,6 +33,7 @@ public class BookRepo implements Repo<Book> {
     @Override
     public Book create(Book book) {
         String sql =  "INSERT INTO BOOK VALUES( ?, ?, ?, ?,?,?,?)";
+        book.setId(getNextId());
         int update = template.update(sql,
                 book.getId(),
                 book.getIsbn(),
@@ -59,11 +60,13 @@ public class BookRepo implements Repo<Book> {
 
     @Override
     public Optional<Book> getById(int id) {
-        return Optional.empty();
+       String sql =  "SELECT * FROM BOOK WHERE ID = ? ";
+        return Optional.of(template.queryForObject(sql, new BeanPropertyRowMapper<>(Book.class), id));
     }
 
     @Override
     public Book update(Book book) {
+        String sql = "UPDATE BOOK SET TITLE=?, CATEGORY=? WHERE ID=?";
         return null;
     }
 
@@ -71,4 +74,10 @@ public class BookRepo implements Repo<Book> {
     public Book deleteById(int id) {
         return null;
     }
+
+    public int getNextId() {
+       return template.queryForObject("select next value for BOOKSEQ", Integer.class);
+    }
 }
+
+// /api/book
