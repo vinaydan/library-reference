@@ -2,6 +2,7 @@ package co.pragra.learning.librarymgment.repo;
 
 import co.pragra.learning.librarymgment.entity.Book;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -77,6 +78,15 @@ public class BookRepo implements Repo<Book> {
     @Override
     public Book deleteById(int id) {
         return null;
+    }
+
+    public Optional<Book> getByIsbn(String isbn) {
+        String sql =  "SELECT * FROM BOOK WHERE ISBN = ? ";
+        try {
+            return Optional.of(template.queryForObject(sql, new BeanPropertyRowMapper<>(Book.class), isbn));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public int getNextId() {
