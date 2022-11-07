@@ -39,4 +39,9 @@ public class BookApi {
         return repo.getByIsbn(isbn);
     }
 
+    @DeleteMapping("/api/book/id/{id}")
+    public Book deleteById(@PathVariable int id) {
+        return repo.deleteById(id);
+    }
+
 }

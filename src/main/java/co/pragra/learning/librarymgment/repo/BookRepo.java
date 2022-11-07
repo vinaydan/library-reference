@@ -65,7 +65,7 @@ public class BookRepo implements Repo<Book> {
 
     @Override
     public Optional<Book> getById(int id) {
-       String sql =  "SELECT * FROM BOOK WHERE ID = ? ";
+        String sql =  "SELECT * FROM BOOK WHERE ID = ? ";
         return Optional.of(template.queryForObject(sql, new BeanPropertyRowMapper<>(Book.class), id));
     }
 
@@ -77,7 +77,22 @@ public class BookRepo implements Repo<Book> {
 
     @Override
     public Book deleteById(int id) {
-        return null;
+        String sql =  "SELECT * FROM BOOK WHERE ID = ? ";
+        Book book;
+        try {
+            book = template.queryForObject(sql, new BeanPropertyRowMapper<>(Book.class), id);
+            String sqld =  "DELETE FROM BOOK WHERE ID = ? ";
+            int update = template.update(sqld, id);
+            if (update == 1) {
+                log.debug("Book - [{}] has been deleted successfully from database", book);
+                return book;
+            } else {
+                log.error("Couldn't delete record for book");
+                return null;
+            }
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Optional<Book> getByIsbn(String isbn) {
