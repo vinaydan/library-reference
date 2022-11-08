@@ -30,6 +30,11 @@ public class BookApi {
         return repo.getAll(Collections.emptyMap());
     }
 
+    @GetMapping("/api/book/id/{id}")
+    public Optional<Book> getById(@PathVariable int id) {
+        return repo.getById(id);
+    }
+
     @GetMapping("/api/book/isbn/{isbn}")
     public Optional<Book> getByIsbn(@PathVariable String isbn) {
         return repo.getByIsbn(isbn);
