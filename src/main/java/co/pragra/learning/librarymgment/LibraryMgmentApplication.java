@@ -1,17 +1,14 @@
 package co.pragra.learning.librarymgment;
 
-import co.pragra.learning.librarymgment.entity.Author;
 import co.pragra.learning.librarymgment.entity.Book;
-import co.pragra.learning.librarymgment.repo.AuthorRepo;
-import co.pragra.learning.librarymgment.repo.BookRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import co.pragra.learning.librarymgment.repo.AuthorRepo;
+import co.pragra.learning.librarymgment.repo.BookRepo;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication

@@ -2,14 +2,10 @@ package co.pragra.learning.librarymgment.rest;
 
 import co.pragra.learning.librarymgment.entity.Book;
 import co.pragra.learning.librarymgment.repo.BookRepo;
-import org.apache.catalina.LifecycleState;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -42,6 +38,11 @@ public class BookApi {
     @DeleteMapping("/api/book/id/{id}")
     public Book deleteById(@PathVariable int id) {
         return repo.deleteById(id);
+    }
+
+    @PutMapping("/api/book")
+    public Book update(@RequestBody Book book){
+        return repo.update(book);
     }
 
 }

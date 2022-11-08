@@ -4,7 +4,6 @@ import co.pragra.learning.librarymgment.entity.Book;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -74,7 +73,16 @@ public class BookRepo implements Repo<Book> {
     @Override
     public Book update(Book book) {
         String sql = "UPDATE BOOK SET TITLE=?, CATEGORY=? WHERE ID=?";
-        return null;
+        int update = template.update(sql
+                , new Object[] {book.getTitle(), book.getCategory(),book.getId()});
+        System.out.println("update:"+ update);
+        if (update==1){
+            log.debug("Book - [{}] has been updated successfully", book);
+        }else {
+            log.error("Book could not be updated");
+        }
+
+        return book;
     }
 
     @Override
