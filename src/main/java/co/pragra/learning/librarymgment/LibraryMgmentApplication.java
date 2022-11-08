@@ -2,6 +2,7 @@ package co.pragra.learning.librarymgment;
 
 import co.pragra.learning.librarymgment.entity.Author;
 import co.pragra.learning.librarymgment.entity.Book;
+import co.pragra.learning.librarymgment.repo.AuthorRepo;
 import co.pragra.learning.librarymgment.repo.BookRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,9 +18,11 @@ import java.util.List;
 public class LibraryMgmentApplication {
 
     private BookRepo repo;
+    private AuthorRepo repoAuthor;
 
-    public LibraryMgmentApplication(BookRepo repo) {
+    public LibraryMgmentApplication(BookRepo repo, AuthorRepo repoAuthor) {
         this.repo = repo;
+        this.repoAuthor = repoAuthor;
     }
 
     public static void main(String[] args) {

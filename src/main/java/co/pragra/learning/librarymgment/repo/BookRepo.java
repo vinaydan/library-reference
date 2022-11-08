@@ -27,9 +27,11 @@ public class BookRepo implements Repo<Book> {
             template.execute("DROP TABLE IF EXISTS BOOK;");
             template.execute("DROP TABLE IF EXISTS AUTHOR;");
             template.execute("DROP SEQUENCE IF EXISTS BOOKSEQ;");
+            template.execute("DROP SEQUENCE IF EXISTS AUTHORSEQ;");
             template.execute("CREATE TABLE AUTHOR (ID INTEGER NOT NULL, NAME VARCHAR(100), CONSTRAINT AUTHOR_PK PRIMARY KEY (ID));");
             template.execute("CREATE TABLE BOOK (ID INTEGER NOT NULL, ISBN VARCHAR(30) UNIQUE, TITLE VARCHAR(100), CATEGORY VARCHAR(30), PUBLISHDATE DATE, CREATEDATE DATE, AUTHORID INTEGER, CONSTRAINT BOOK_PK PRIMARY KEY (ID), CONSTRAINT BOOK_FK FOREIGN KEY (AUTHORID) REFERENCES AUTHOR(ID));");
             template.execute("CREATE SEQUENCE BOOKSEQ;");
+            template.execute("CREATE SEQUENCE AUTHORSEQ;");
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
