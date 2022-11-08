@@ -16,6 +16,11 @@ import java.util.Optional;
 public class BookRepo implements Repo<Book> {
 
     private JdbcTemplate template;
+    private final String sqlBookJoinAuthor = "SELECT BOOK.ID, BOOK.TITLE, BOOK.ISBN, \n" +
+            "BOOK.CATEGORY, BOOK.CREATEDATE, BOOK.PUBLISHDATE, \n" +
+            "AUTHOR.ID, AUTHOR.NAME \n" +
+            "FROM BOOK \n" +
+            "JOIN AUTHOR ON BOOK.AUTHORID = AUTHOR.ID \n";
 
     public BookRepo(JdbcTemplate template) {
         this.template = template;
@@ -60,14 +65,18 @@ public class BookRepo implements Repo<Book> {
 
     @Override
     public List<Book> getAll(Map<String, Object> params) {
-        String sql =  "SELECT * FROM BOOK";
-        return template.query(sql, new BeanPropertyRowMapper<>(Book.class));
+        String sql = sqlBookJoinAuthor;
+        return template.query(sql, new BookRowMapper());
     }
 
     @Override
     public Optional<Book> getById(int id) {
-        String sql =  "SELECT * FROM BOOK WHERE ID = ? ";
-        return Optional.of(template.queryForObject(sql, new BeanPropertyRowMapper<>(Book.class), id));
+        String sql = sqlBookJoinAuthor + "WHERE BOOK.ID = ? ";
+        try {
+            return Optional.of(template.queryForObject(sql, new BookRowMapper(), id));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -78,19 +87,19 @@ public class BookRepo implements Repo<Book> {
         System.out.println("update:"+ update);
         if (update==1){
             log.debug("Book - [{}] has been updated successfully", book);
+            return book;
         }else {
             log.error("Book could not be updated");
+            return null;
         }
-
-        return book;
     }
 
     @Override
     public Book deleteById(int id) {
-        String sql =  "SELECT * FROM BOOK WHERE ID = ? ";
+        String sql = sqlBookJoinAuthor + "WHERE BOOK.ID = ? ";
         Book book;
         try {
-            book = template.queryForObject(sql, new BeanPropertyRowMapper<>(Book.class), id);
+            book = template.queryForObject(sql, new BookRowMapper(), id);
             String sqld =  "DELETE FROM BOOK WHERE ID = ? ";
             int update = template.update(sqld, id);
             if (update == 1) {
@@ -106,9 +115,9 @@ public class BookRepo implements Repo<Book> {
     }
 
     public Optional<Book> getByIsbn(String isbn) {
-        String sql =  "SELECT * FROM BOOK WHERE ISBN = ? ";
+        String sql = sqlBookJoinAuthor + "WHERE BOOK.ISBN = ?";
         try {
-            return Optional.of(template.queryForObject(sql, new BeanPropertyRowMapper<>(Book.class), isbn));
+            return Optional.of(template.queryForObject(sql, new BookRowMapper(), isbn));
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
