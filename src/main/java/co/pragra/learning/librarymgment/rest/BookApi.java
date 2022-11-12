@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class BookApi {
@@ -25,6 +26,11 @@ public class BookApi {
     @GetMapping("/api/book")
     public List<Book> getAll() {
         return repo.findAll();
+    }
+
+    @GetMapping("/api/book/noreview")
+    public List<Book> getAllwithNoReview() {
+        return repo.findAll().stream().filter(book -> book.getReviews().size()==0).collect(Collectors.toList());
     }
 
     @GetMapping("/api/book/id/{id}")

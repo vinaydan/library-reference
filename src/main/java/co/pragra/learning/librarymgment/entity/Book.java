@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -27,5 +28,8 @@ public class Book {
     private Author author;
     private Date publishDate;
     private Date createDate;
+
+    @OneToMany
+    private List<Review> reviews;
 }
 
