@@ -5,6 +5,8 @@ import co.pragra.learning.librarymgment.repo.BookRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -19,6 +21,23 @@ public class BookController {
 
     @GetMapping("/book")
     public String bookHome(Model model) {
+        List<Book> all = repository.findAll();
+        model.addAttribute("title", "Library Managing Book -" + all.size() );
+        model.addAttribute("books", all);
+        return "book";
+    }
+
+    @GetMapping("/createbook")
+    public String create(Model model) {
+        model.addAttribute("book",  new Book());
+        return "createbook";
+    }
+
+
+
+    @PostMapping("/book")
+    public String createBook(@ModelAttribute Book book,  Model model) {
+        repository.save(book);
         List<Book> all = repository.findAll();
         model.addAttribute("title", "Library Managing Book -" + all.size() );
         model.addAttribute("books", all);
