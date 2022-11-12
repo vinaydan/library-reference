@@ -5,18 +5,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Book {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    @Column(unique = true)
     private String isbn;
+    @Column(nullable = false)
     private String title;
+    @Column(name = "BOOK_CATEGORY")
     private String category;
+    @OneToOne(cascade = CascadeType.ALL)
     private Author author;
     private Date publishDate;
     private Date createDate;
 }
+

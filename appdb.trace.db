@@ -314,3 +314,21 @@ SELECT  BOOKSEQ.NEXTVAL from dual [42122-214]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:834)
+2022-11-08 20:57:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]user CASCADE "; expected "identifier"; SQL statement:
+drop table if exists user CASCADE  [42001-214]
+2022-11-08 20:57:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table [*]user (id bigint not null, create_date timestamp, first_name varchar(50) not null, last_name varchar(255), login varchar(255), password varchar(255), update_date timestamp, user_type integer, primary key (id))"; expected "identifier"; SQL statement:
+create table user (id bigint not null, create_date timestamp, first_name varchar(50) not null, last_name varchar(255), login varchar(255), password varchar(255), update_date timestamp, user_type integer, primary key (id)) [42001-214]
+2022-11-08 20:57:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table [*]user add constraint UK_ew1hvam8uwaknuaellwhqchhb unique (login)"; expected "identifier"; SQL statement:
+alter table user add constraint UK_ew1hvam8uwaknuaellwhqchhb unique (login) [42001-214]
+2022-11-08 20:58:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table if exists [*]user CASCADE "; expected "identifier"; SQL statement:
+drop table if exists user CASCADE  [42001-214]
+2022-11-08 20:59:36 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]describe table table_user"; expected "DELETE, DROP, DECLARE, DEALLOCATE"; SQL statement:
+describe table table_user [42001-214]
+2022-11-08 20:59:43 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]describe table_user"; expected "DELETE, DROP, DECLARE, DEALLOCATE"; SQL statement:
+describe table_user [42001-214]
